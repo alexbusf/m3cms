@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>M3CMS | {% block title %} {% endblock %}</title>
+  </head>
+  <body class="d-flex flex-column h-100">
+
+  {% load mptt_tags %}
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <a href="{% url 'post-list' %}" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+                <span class="fs-4">M3CMS</span>
+            </a>
+            <ul class="nav">
+                {% if user.is_authenticated %}
+                {% if perms.main.can_post_create_edit %}
+                <li class="nav-item"><a href="{% url 'new-post' %}" class="nav-link link-dark px-2">Add post</a></li>
+                {% endif %}
+                <a href="#" class="nav-link disabled link-dark px-2">User: </a></li>
+                <li class="nav-item"><a href="{% url 'post-by-author' pk=user.pk %}" class="nav-link link-dark px-2">{{ user.username }}</a></li>
+                <li class="nav-item"><a class="btn btn-secondary" role="button" href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'login' %}" class="nav-link link-dark px-2">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+  </header>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <div class="container d-flex flex-wrap">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'post-list' %}">Home</a>
+            </li>
+
+            {% recursetree categories %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="{{ node.get_absolute_url }}" id="navbarDropdown" role="button" {% if not node.is_leaf_node %}data-bs-toggle="dropdown"{% endif %} aria-expanded="false">
+                {{node.title}}
+              </a>
+              {% if not node.is_leaf_node %}
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {{children}}
+              </ul>
+              {% endif %}
+            </li>
+            {% endrecursetree %}
+
+          </ul>
+          <form class="d-flex" action="{% url 'search-results' %}" method="get">
+            <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+  </nav>
+
+  <main class="flex-shrink-0">
+      <div class="container">
+          <div class="row">
+            {% block content %} {% endblock %}
+            {% block sidebar %} {% include 'main/sidebar.html' %} {% endblock sidebar %}
+          </div>
+      </div>
+  </main>
+
+  <footer class="footer mt-auto py-3 bg-light">
+      <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+  </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Delete {% endblock %}
+
+{% block content %}
+<div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>Update post</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>Are you sure you want to delete "{{ object.title }}"</p>
+            <input class="btn btn-danger" type="submit" value="Detete">
+        </form>
+      </div>
+</div>
+{% endblock %}
