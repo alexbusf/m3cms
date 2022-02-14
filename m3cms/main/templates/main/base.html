@@ -71,16 +71,46 @@
 
   <main class="flex-shrink-0">
       <div class="container">
-          <div class="row">
+          <div class="row border-bottom pb-3 mb-3">
             {% block content %} {% endblock %}
             {% block sidebar %} {% include 'main/sidebar.html' %} {% endblock sidebar %}
           </div>
       </div>
   </main>
 
+
+
   <footer class="footer mt-auto py-3 bg-light">
-      <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
+      <div class="container" >
+        <div class="row border-bottom pb-3 mb-3">
+          <div class="col-4">
+            <h5>Main</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+            </ul>
+          </div>
+
+          <div class="col-4">
+            <h5>Social media</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+            </ul>
+          </div>
+
+          <div class="col-4">
+            <h5>Contacts</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+              <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="text-center text-muted">&copy; 2022 tbcon.ru</p>
       </div>
   </footer>
 
