@@ -44,6 +44,10 @@ class PostDetail(generic.DetailView):
     model = Post
 
 
+class About(generic.TemplateView):
+    template_name = 'main/about.html'
+
+
 class PostCreateView(PermissionRequiredMixin, generic.edit.CreateView):
     model = Post
     template_name = 'main/post_create.html'
