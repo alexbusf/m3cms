@@ -18,7 +18,7 @@ class PostAdminForm(forms.ModelForm):
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
     list_display = ('title', 'category', 'created')
-    fields = ['description', 'title', 'category', 'content']
+    fields = ['description', 'title', 'category', 'content', 'published']
 
     def save_model(self, request, obj, form, change):
         if not change:

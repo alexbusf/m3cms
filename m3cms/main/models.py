@@ -35,6 +35,7 @@ class Post(models.Model):
     category = TreeForeignKey('Category', on_delete=models.CASCADE, related_name='posts')
     #content = models.TextField()
     content = RichTextUploadingField(blank=True, null=True)
+    published = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

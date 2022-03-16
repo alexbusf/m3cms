@@ -10,13 +10,16 @@ from django.db.models import Q
 class PostListView(generic.ListView):
     model = Post
 
+    def get_queryset(self):
+        return Post.objects.filter(published=True)
+
 
 class PostByCategoryView(generic.ListView):
     model = Post
 
     def get_queryset(self):
         cat = get_object_or_404(Category, slug=self.kwargs['category_slug'])
-        return Post.objects.filter(category=cat)
+        return Post.objects.filter(category=cat, published=True)
         #return Post.objects.filter(category__slug=self.kwargs['category_slug'])
 
 
@@ -51,7 +54,7 @@ class About(generic.TemplateView):
 class PostCreateView(PermissionRequiredMixin, generic.edit.CreateView):
     model = Post
     template_name = 'main/post_create.html'
-    fields = ['title', 'category', 'description', 'content']
+    fields = ['title', 'category', 'description', 'content', 'published']
     permission_required = 'main.can_post_create_edit'
 
     def form_valid(self, form):
@@ -64,7 +67,7 @@ class PostCreateView(PermissionRequiredMixin, generic.edit.CreateView):
 class PostUpdateView(PermissionRequiredMixin, generic.edit.UpdateView):
     model = Post
     template_name = 'main/post_update.html'
-    fields = ['title', 'category', 'description', 'content']
+    fields = ['title', 'category', 'description', 'content', 'published']
     permission_required = 'main.can_post_create_edit'
 
 
